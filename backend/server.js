@@ -1,18 +1,18 @@
-import dbConnect from "./db.js";
 import express from 'express'
 import cors from 'cors'
+import { configDotenv } from 'dotenv'
+import userRoutes from './routes/userRoutes.js'
 
-const port = 5000
-dbConnect()
+configDotenv()
 
 const app = express()
+
+// Midleware
 app.use(cors())
 
-app.get('/',(req,res)=>{
-    res.json({message:"CORS enabledffffffffff"});
+app.use('/api/users',userRoutes)
+
+app.listen(process.env.PORT,()=>{
+    console.log(`running on port${process.env.PORT}`)
 })
 
-
-app.listen(port,()=>{
-    console.log('listning to port 5000')
-})

@@ -1,12 +1,16 @@
 import mongoose from "mongoose";
+import { configDotenv } from "dotenv";
 
-const dbConnect = async () => {
+configDotenv()
+const connectDB = async () => {
   try {
-    await mongoose.connect("mongodb+srv://addisalemseifu_db_user:jZ4szo0jEKNcXZ3j@cluster0.ider90x.mongodb.net/?appName=Cluster0");
-    console.log("MongoDB connected");
+    const conn = await mongoose.connect(process.env.MONGO_URI);
+    console.log(`MongoDB connected: ${conn.connection.host}`);
   } catch (err) {
     console.error("Connection error:", err);
+    process.exit(1);
   }
 };
 
-export default dbConnect;
+
+export default connectDB;
